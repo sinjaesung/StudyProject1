@@ -44,7 +44,7 @@ public class Gun_Bazooka : Gun
                 //맞은 데미지: 총의 대미지
                 //맞은 지점: 총알이 다은 지점
                 //맞은 회전값: 부딪힌 장소의 회전값 - hit.normal
-                target.OnDamage(damage, hit.point, hit.normal);
+               // target.OnDamage(damage, hit.point, hit.normal);
             }
 
             //공격 가능한 대상에게 총알이 닿았든, 공격 가능하지 않은 대상에게 닿았든(벽,울타리)

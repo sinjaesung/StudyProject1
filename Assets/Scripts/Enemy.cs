@@ -111,6 +111,11 @@ public class Enemy : LivingEntity {
     }
 
     // 데미지를 입었을때 실행할 처리
+    public override void OnDamage(float damage)
+    {
+        base.OnDamage(damage);
+        //부모 클래스의 OnDamage 메커니즘 그대로 실행.
+    }
     public override void OnDamage(float damage, Vector3 hitPoint, Vector3 hitNormal) {
         if(dead == false)
         {

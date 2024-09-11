@@ -27,6 +27,17 @@ public class LivingEntity : MonoBehaviour, IDamageable {
             Die();
         }
     }
+    public virtual void OnDamage(float damage)
+    {
+        //데미지를 입은 만큼 체력이 감소
+        //체력이 0이 되었을 때 아직 죽지 않았을 떄 사망 처리 진행
+        health = health - damage;
+
+        if (health <= 0 && dead == false)
+        {
+            Die();
+        }
+    }
 
     // 체력을 회복하는 기능
     public virtual void RestoreHealth(float newHealth) {

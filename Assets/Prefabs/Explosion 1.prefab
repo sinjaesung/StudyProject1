@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5685156550803971927}
   - component: {fileID: -5784799230947779352}
   - component: {fileID: 2958489246364247170}
+  - component: {fileID: 8783805200999924472}
   m_Layer: 12
   m_Name: Explosion 1
   m_TagString: PlayerExplodes
@@ -225,8 +226,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 1, g: 0.48235294, b: 0, a: 1}
-      maxColor: {r: 1, g: 1, b: 0, a: 1}
+      minColor: {r: 1, g: 0.924858, b: 0, a: 1}
+      maxColor: {r: 1, g: 0.3162943, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -2250,7 +2251,7 @@ ParticleSystem:
         m_RotationOrder: 4
     m_Range: {x: 0, y: 1}
   ForceModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
@@ -2307,7 +2308,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 4
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -5006,8 +5007,21 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 2.4, y: 1.2, z: 2.4}
+  m_Center: {x: 0, y: 0.6, z: 0}
+--- !u!114 &8783805200999924472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3741047309661337480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d6a572dce433934dae32ac023665aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 240
 --- !u!1 &8708698991942613163
 GameObject:
   m_ObjectHideFlags: 0

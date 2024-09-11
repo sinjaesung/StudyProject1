@@ -21,7 +21,8 @@ public class AmmoPack : MonoBehaviour, IItem {
 
         var shooter = target.GetComponent<PlayerShooter>();//기본건
         var shooter2 = target.GetComponent<PlayerShooter2>();//샷건
-        
+        var shooter3 = target.GetComponent<PlayerShooter3>();//바주카
+
         if (inventory.isWeapon1Active)
         {
             shooter = target.GetComponent<PlayerShooter>();
@@ -56,7 +57,19 @@ public class AmmoPack : MonoBehaviour, IItem {
         }
         else if (inventory.isWeapon3Active)
         {
+            shooter3 = target.GetComponent<PlayerShooter3>();
 
+            if (shooter3 != null && shooter3.gun != null)
+            {
+                //참조에 성공하면
+                //탄창 갯수 증가
+                shooter3.gun.ammoRemain += ammo;
+                //이 오브젝트 파괴
+
+                UIManager.instance.UpdateAmmoText(shooter3.gun.magAmmo, shooter3.gun.ammoRemain);
+
+                Destroy(this.gameObject);
+            }
         }   
     }
 }
