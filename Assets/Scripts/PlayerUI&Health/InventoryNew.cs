@@ -183,13 +183,14 @@ public class InventoryNew : MonoBehaviour
         if (fistFightMode == true)
         {
             //기본 맨손 모드
-            fistFight.GetComponent<FistFight>().enabled = true;
+            fistFight.enabled = true;
         }
 
         if (isWeapon6Active == true)
         {
             StartCoroutine(Weapon6GO());//검투모드 발동
             SMAS.GetComponent<SingleMeleeAttack>().enabled = true;
+            fistFight.enabled = false;
             anim.SetBool("SingleHandAttackActive", true);
             anim.SetBool("FistFightActive", false);
         }
@@ -204,6 +205,7 @@ public class InventoryNew : MonoBehaviour
         {
             StartCoroutine(Weapon1GO());//기본권총모드
             playershooterScript.enabled = true;
+            fistFight.enabled = false;
             anim.SetBool("RifleActive", true);
             anim.SetBool("FistFightActive", false);
         }
@@ -217,6 +219,7 @@ public class InventoryNew : MonoBehaviour
         {
             StartCoroutine(Weapon2GO());//샷건
             playershooter2Script.enabled = true;
+            fistFight.enabled = false;
             anim.SetBool("RifleActive", true);
             anim.SetBool("FistFightActive", false);
         }
@@ -231,6 +234,7 @@ public class InventoryNew : MonoBehaviour
         {
             StartCoroutine(Weapon3GO());//바주카
             playershooter3Script.enabled = true;
+            fistFight.enabled = false;
             anim.SetBool("BazookaActive", true);
             anim.SetBool("FistFightActive", false);
         }
@@ -246,6 +250,7 @@ public class InventoryNew : MonoBehaviour
         {
             StartCoroutine(Weapon4GO());
             wandshooter1Script.enabled = true;
+            fistFight.enabled = false;
             anim.SetBool("BazookaActive", true);
             anim.SetBool("FistFightActive", false);
         }
@@ -261,6 +266,7 @@ public class InventoryNew : MonoBehaviour
         {
             StartCoroutine(Weapon5GO());
             wandshooter2Script.enabled = true;
+            fistFight.enabled = false;
             anim.SetBool("BazookaActive", true);
             anim.SetBool("FistFightActive", false);
         }

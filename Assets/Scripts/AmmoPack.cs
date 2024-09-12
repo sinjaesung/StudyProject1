@@ -4,11 +4,11 @@
 public class AmmoPack : MonoBehaviour, IItem {
     public int ammo = 30; // 충전할 총알 수
 
-    public Inventory inventory;
+    public InventoryNew inventory;
 
     void Awake()
     {
-        inventory = FindObjectOfType<Inventory>();
+        inventory = FindObjectOfType<InventoryNew>();
     }
 
     public void Use(GameObject target) {

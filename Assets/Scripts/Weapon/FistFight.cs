@@ -19,6 +19,13 @@ public class FistFight : MonoBehaviour
     [SerializeField] Transform RightHandPunch;
     [SerializeField] Transform LeftLegKick;
 
+    //Hit Effect
+    [SerializeField] GameObject HitEffect1_singlefist;
+    [SerializeField] GameObject HitEffect2_doublefist;
+    [SerializeField] GameObject HitEffect3_handkick;
+    [SerializeField] GameObject HitEffect4_kickcombo;
+    [SerializeField] GameObject HitEffect5_leftkick;
+
     private void Update()
     {
         if (!Input.GetMouseButtonDown(0))
@@ -136,7 +143,27 @@ public class FistFight : MonoBehaviour
                 //IDamagable을 갖고 있는 물체는 무조건 OnDamage 함수를 갖고 있다.
 
                 //맞은 데미지: 총의 대미지
-                target.OnDamage(18);
+                target.OnDamage(giveDamage);
+                if (FistFightVal == 1)
+                {
+                    Instantiate(HitEffect1_singlefist, attackArea.transform.position, Quaternion.identity);
+                }
+                else if (FistFightVal == 2)
+                {
+                    Instantiate(HitEffect2_doublefist, attackArea.transform.position, Quaternion.identity);
+                }
+                else if (FistFightVal == 3)
+                {
+                    Instantiate(HitEffect3_handkick, attackArea.transform.position, Quaternion.identity);
+                }
+                else if (FistFightVal == 4)
+                {
+                    Instantiate(HitEffect4_kickcombo, attackArea.transform.position, Quaternion.identity);
+                }
+                else if (FistFightVal == 5)
+                {
+                    Instantiate(HitEffect5_leftkick, attackArea.transform.position, Quaternion.identity);
+                }
             }
         }
     }

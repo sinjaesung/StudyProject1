@@ -13,6 +13,10 @@ public class SingleMeleeAttack : MonoBehaviour
     public float attackRadius;
     //public LayerMask knightLayer;
 
+    public AudioSource SwordAudioPlayer; //  소리 재생기
+    [SerializeField] public AudioClip SwordClip; // 소리(var)
+    [SerializeField] public AudioClip SwordClip2; // 소리(var)
+
     private void Update()
     {
         if (!Input.GetMouseButtonDown(0))
@@ -106,9 +110,10 @@ public class SingleMeleeAttack : MonoBehaviour
             {
                 //부딪힌 물체가 데미지를 입을 수 있는 대상일 때
                 //IDamagable을 갖고 있는 물체는 무조건 OnDamage 함수를 갖고 있다.
-
+                Debug.Log("SingleMeleeAttack target is exists");
                 //맞은 데미지: 총의 대미지
-                target.OnDamage(18);
+                SwordAudioPlayer.PlayOneShot(SwordClip);
+                target.OnDamage(giveDamage, knight.ClosestPoint(attackArea.position),(knight.transform.position - attackArea.position));
             }
         }
     }
@@ -127,6 +132,7 @@ public class SingleMeleeAttack : MonoBehaviour
         //anim.SetFloat("movementValue", 0f);
         yield return new WaitForSeconds(0.2f);
         anim.SetBool("SingleAttack1", false);
+
         //anim.SetFloat("movementValue", 0f);
     }
 
@@ -160,9 +166,11 @@ public class SingleMeleeAttack : MonoBehaviour
     IEnumerator SingleAttack5()
     {
         anim.SetBool("SingleAttack5", true);
+        SwordAudioPlayer.PlayOneShot(SwordClip2);
         //anim.SetFloat("movementValue", 0f);
         yield return new WaitForSeconds(0.2f);
         anim.SetBool("SingleAttack5", false);
+        SwordAudioPlayer.PlayOneShot(SwordClip2);
         //anim.SetFloat("movementValue", 0f);
     }
 }
