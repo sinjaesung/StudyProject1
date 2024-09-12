@@ -14,12 +14,15 @@ public class PlayerShooter3 : MonoBehaviour
     private Animator playerAnimator; // 애니메이터 컴포넌트
 
     public float UpperBodyIKWeight = 1;
+
+    public float Timer = 0f;
+    public bool isMoving;
+
     private void Start()
     {
         //playerinput,playeranimator 참조 받아오기
         playerInput = GetComponent<PlayerInput>();
-        playerAnimator = GetComponent<Animator>();
-
+        playerAnimator = GetComponentInChildren<Animator>();
     }
 
     private void OnEnable()
@@ -37,6 +40,14 @@ public class PlayerShooter3 : MonoBehaviour
 
     private void Update()
     {
+        if (playerAnimator.GetFloat("movementValue") > 0.001f)
+        {
+            isMoving = true;
+        }
+        else if (playerAnimator.GetFloat("mvovementValue") < 0.0999999f)
+        {
+            isMoving = false;
+        }
         // 입력을 감지하고 총 발사하거나 재장전
 
         //총을 발사한다는 입력을 감지했을 때
@@ -45,19 +56,32 @@ public class PlayerShooter3 : MonoBehaviour
         {
             //총을 발사할 수 있는지 체크하는 함수 실행 ( gun 스크립트의 Fire)
             gun.Fire();
+            playerAnimator.SetBool("BazookaActive", true);
+            playerAnimator.SetBool("BazookaShooting", true);
+            Timer = 0f;
+        }else if (!playerInput.fireDown)
+        {
+            playerAnimator.SetBool("BazookaShooting", false);
+            Timer += Time.deltaTime;
         }
+        
         //총을 재장전한다는 입력을 감지했을 때
-        else if (playerInput.reload)
+        if (playerInput.reload)
         {
             //재장전
             if (gun.Reload() == true)//이 타이밍에 이미 리로드 함수는 실행됐다.
             {
-                playerAnimator.SetTrigger("Reload");
+                //playerAnimator.SetBool("ReloadBazooka",true);
             }
         }
         //UpdateUI();
         //재장전
         //재장전에 성공했을 떄 장전 애니메이션을 실행
+        if(Timer > 5f)
+        {
+            Debug.Log("Bazooka mode off,마우스를 뗀 이후로 5초이상 지난시점에 대전모드off");
+            playerAnimator.SetBool("BazookaActive", false);
+        }
     }
 
     // 탄약 UI 갱신

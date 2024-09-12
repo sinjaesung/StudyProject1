@@ -4,8 +4,7 @@ using UnityEngine;
 // 알맞은 애니메이션을 재생하고 IK를 사용해 캐릭터 양손이 총에 위치하도록 조정
 public class PlayerShooter2 : MonoBehaviour
 {
-    //샷건 스크립트(샷건,기본총 동일Gun사용):동일 레이케스트 타겟 방식 사용
-    public Gun gun; // 사용할 총(샷건,권총)
+    public Gun gun; // 사용할 총
     public Transform gunPivot; // 총 배치의 기준점
     public Transform leftHandMount; // 총의 왼쪽 손잡이, 왼손이 위치할 지점
     public Transform rightHandMount; // 총의 오른쪽 손잡이, 오른손이 위치할 지점
@@ -14,11 +13,16 @@ public class PlayerShooter2 : MonoBehaviour
     private Animator playerAnimator; // 애니메이터 컴포넌트
 
     public float UpperBodyIKWeight = 1;
+
+    public bool isMoving;
+
+    public float Timer = 0f;//모드 전환 관련
+
     private void Start()
     {
         //playerinput,playeranimator 참조 받아오기
         playerInput = GetComponent<PlayerInput>();
-        playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponentInChildren<Animator>();
 
     }
 
@@ -37,37 +41,60 @@ public class PlayerShooter2 : MonoBehaviour
 
     private void Update()
     {
+        //권총,샷건(라이플 공통모드)
+        if (playerAnimator.GetFloat("movementValue") > 0.001f)
+        {
+            isMoving = true;
+        }
+        else if (playerAnimator.GetFloat("mvovementValue") < 0.0999999f)
+        {
+            isMoving = false;
+        }
         // 입력을 감지하고 총 발사하거나 재장전
 
         //총을 발사한다는 입력을 감지했을 때
         //총 발사 스크립트를 실행. (gun 스크립트의 Fire)
         if (playerInput.fire)
         {
+            playerAnimator.SetBool("RifleActive", true);
+            playerAnimator.SetBool("Shooting", true);
             //총을 발사할 수 있는지 체크하는 함수 실행 ( gun 스크립트의 Fire)
+            Debug.Log("RifleActive Mode On:마우스왼쪽클릭down시마다 Timer=0되며 대전모드On");
             gun.Fire();
+            Timer = 0f;
         }
+        else if (!playerInput.fireDown)
+        {
+            playerAnimator.SetBool("Shooting", false);
+            Timer += Time.deltaTime;
+        }
+       
         //총을 재장전한다는 입력을 감지했을 때
-        else if (playerInput.reload)
+        if (playerInput.reload)
         {
             //재장전
             if (gun.Reload() == true)//이 타이밍에 이미 리로드 함수는 실행됐다.
             {
-                playerAnimator.SetTrigger("Reload");
             }
         }
         //UpdateUI();
         //재장전
         //재장전에 성공했을 떄 장전 애니메이션을 실행
+        if (Timer > 5f)
+        {
+            Debug.Log("RifleActive Mode Off, 마우스를 뗀 이후로 5초이상지난 시점에 대전모드Off");
+            playerAnimator.SetBool("RifleActive", false);
+        }
     }
 
     // 탄약 UI 갱신
     private void UpdateUI()
     {
-        /*if (UIManager.instance != null && gun != null)
-        {
-            //참조해야 할 클래스가 할당되어 있는지 체크
-            UIManager.instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);
-        }*/
+        /*        if(UIManager.instance != null && gun != null)
+                {
+                    //참조해야 할 클래스가 할당되어 있는지 체크
+                    UIManager.instance.UpdateAmmoText(gun.magAmmo, gun.ammoRemain);
+                }*/
     }
 
     // 애니메이터의 IK 갱신

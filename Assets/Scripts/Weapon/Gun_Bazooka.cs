@@ -98,4 +98,46 @@ public class Gun_Bazooka : Gun
         // Destroy the particle system object after playback ends
         Destroy(particleObject);
     }
+
+    protected override IEnumerator ReloadRoutine()
+    {
+
+        //코루틴 사용 이유: 재장전 하는 동안의 시간 딜레이를 위해서 사용.
+        Debug.Log("재장전");
+
+        //총의 상태를 '재장전 중'으로 바꾼다. => 중복 재장전 방지
+        state = State.Reloading;
+        PlayerAnimator.SetBool("ReloadBazooka", true);
+        //재장전 효과음 재생
+        gunAudioPlayer.PlayOneShot(reloadClip);
+
+        //재장전 소요시간만큼 시간 딜레이
+        yield return new WaitForSeconds(reloadTime);
+
+        //시간이 끝나면
+        //탄창에 총알을 채운다.
+
+        //채우는 총알 갯수: 현재 탄창이 최대 탄창 갯수가 되려면 몇개가 더 필요한지 계산
+        int ammoToFill = magCapacity - magAmmo;
+
+        //필요한 만큼만 채운다, 만약 총 남은 총알 갯수가 채워야 할 총알 갯수보다 적을 때
+        //남은 총알의 갯수 만큼만 총을 재장전한다.
+        if (ammoRemain < ammoToFill)
+        {
+            //채워야 할 탄알 갯수를 남은 탄알 갯수와 일치하도록 수정한다.
+            ammoToFill = ammoRemain;
+        }
+        PlayerAnimator.SetBool("ReloadBazooka", false);
+
+        //현재 탄알에 탄알 채우기
+        magAmmo += ammoToFill;
+        //전체 탄알에서 채운 탄알만큼 갯수 감소
+        ammoRemain -= ammoToFill;
+
+        //모든 작업이 끝나면 총의 상태를 다시 '준비' 상태로 전환.
+        state = State.Ready;
+
+        UIManager.instance.UpdateAmmoText(magAmmo, ammoRemain);
+        yield return null;
+    }
 }

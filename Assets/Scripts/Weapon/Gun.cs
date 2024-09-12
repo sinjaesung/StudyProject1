@@ -20,7 +20,7 @@ public class Gun : MonoBehaviour {
 
     private LineRenderer bulletLineRenderer; // 총알 궤적을 그리기 위한 렌더러(var)
 
-    private AudioSource gunAudioPlayer; // 총 소리 재생기
+    protected AudioSource gunAudioPlayer; // 총 소리 재생기
     [SerializeField] public AudioClip shotClip; // 발사 소리(var)
     public AudioClip reloadClip; // 재장전 소리
 
@@ -38,7 +38,10 @@ public class Gun : MonoBehaviour {
 
     public Vector3 HitPos;
 
+    public Animator PlayerAnimator;
     private void Awake() {
+        PlayerAnimator = GetComponentInParent<Animator>();
+
         // 사용할 컴포넌트들의 참조를 가져오기
         bulletLineRenderer = GetComponent<LineRenderer>();
         gunAudioPlayer = GetComponent<AudioSource>();
@@ -51,7 +54,7 @@ public class Gun : MonoBehaviour {
         //라인렌더를 잠시 비활성화
         bulletLineRenderer.enabled = false;
     }
-
+  
     private void OnEnable() {
         // 총 상태 초기화
 
@@ -76,7 +79,7 @@ public class Gun : MonoBehaviour {
         //발사 시간 체크 : 마지막 발사 시간 + 발사 간격을 한 시간이 현재 시간보다 작다
         //시간이 더 흘렀다는 뜻이니 발사가 가능하도록.
         Debug.Log($"총 쏘기 시도{Time.time} >= {lastFireTime} + {timeBetFire}({lastFireTime+timeBetFire}>>");
-
+     
         if (state == State.Ready && Time.time >= lastFireTime + timeBetFire)
         {
             Debug.Log("총 쏘기 가능>>");
@@ -216,13 +219,14 @@ public class Gun : MonoBehaviour {
     }
 
     // 실제 재장전 처리를 진행
-    private IEnumerator ReloadRoutine() {
+    protected virtual IEnumerator ReloadRoutine() {
 
         //코루틴 사용 이유: 재장전 하는 동안의 시간 딜레이를 위해서 사용.
         Debug.Log("재장전");
 
         //총의 상태를 '재장전 중'으로 바꾼다. => 중복 재장전 방지
         state = State.Reloading;
+        PlayerAnimator.SetBool("ReloadRifle", true);
 
         //재장전 효과음 재생
         gunAudioPlayer.PlayOneShot(reloadClip);
@@ -243,6 +247,7 @@ public class Gun : MonoBehaviour {
             //채워야 할 탄알 갯수를 남은 탄알 갯수와 일치하도록 수정한다.
             ammoToFill = ammoRemain;
         }
+        PlayerAnimator.SetBool("ReloadRifle", false);
 
         //현재 탄알에 탄알 채우기
         magAmmo += ammoToFill;

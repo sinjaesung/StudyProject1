@@ -12,10 +12,15 @@ public class PlayerShooter : MonoBehaviour {
     private Animator playerAnimator; // 애니메이터 컴포넌트
 
     public float UpperBodyIKWeight = 1;
+
+    public bool isMoving;
+
+    public float Timer = 0f;//모드 전환 관련
+
     private void Start() {
         //playerinput,playeranimator 참조 받아오기
         playerInput = GetComponent<PlayerInput>();
-        playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponentInChildren<Animator>();
 
     }
 
@@ -31,27 +36,52 @@ public class PlayerShooter : MonoBehaviour {
     }
 
     private void Update() {
+        //권총,샷건(라이플 공통모드)
+        if (playerAnimator.GetFloat("movementValue") > 0.001f)
+        {
+            isMoving = true;
+        }
+        else if (playerAnimator.GetFloat("mvovementValue") < 0.0999999f)
+        {
+            isMoving = false;
+        }
         // 입력을 감지하고 총 발사하거나 재장전
 
         //총을 발사한다는 입력을 감지했을 때
         //총 발사 스크립트를 실행. (gun 스크립트의 Fire)
         if (playerInput.fire)
         {
+            playerAnimator.SetBool("RifleActive", true);
+            playerAnimator.SetBool("Shooting", true);
             //총을 발사할 수 있는지 체크하는 함수 실행 ( gun 스크립트의 Fire)
+            Debug.Log("RifleActive Mode On:마우스왼쪽클릭down시마다 Timer=0되며 대전모드On");
             gun.Fire();
-        }
-        //총을 재장전한다는 입력을 감지했을 때
-        else if (playerInput.reload)
+            Timer = 0f;
+        }else if (!playerInput.fireDown)
         {
+            playerAnimator.SetBool("Shooting", false);
+            Timer += Time.deltaTime;
+        }
+        
+        
+        //총을 재장전한다는 입력을 감지했을 때
+        if (playerInput.reload)
+        {
+            Debug.Log("건 리로드");
             //재장전
             if(gun.Reload() == true)//이 타이밍에 이미 리로드 함수는 실행됐다.
             {
-                playerAnimator.SetTrigger("Reload");
+               // playerAnimator.SetTrigger("Reload");
             }
         }
         //UpdateUI();
         //재장전
         //재장전에 성공했을 떄 장전 애니메이션을 실행
+        if (Timer > 5f)
+        {
+            Debug.Log("RifleActive Mode Off, 마우스를 뗀 이후로 5초이상지난 시점에 대전모드Off");
+            playerAnimator.SetBool("RifleActive", false);
+        }
     }
 
     // 탄약 UI 갱신

@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour {
 
     private void Start() {
         // 사용할 컴포넌트들의 참조를 가져오기
-        playerAnimator = GetComponent<Animator>();
+        playerAnimator = GetComponentInChildren<Animator>();
         playerRigidbody = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
     }
@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour {
         //움직이는 애니메이션
         //애니메이터의 move 파라미터값을 갱신한다. (-1~1)
         //파라미터를 가져오는 위치 : PlayerInput에서 가져온다.
-        playerAnimator.SetFloat("Move", playerInput.move);
+        playerAnimator.SetFloat("movementValue", playerInput.move);
     }
 
     // 입력값에 따라 캐릭터를 앞뒤로 움직임

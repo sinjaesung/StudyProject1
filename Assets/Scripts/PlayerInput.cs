@@ -14,6 +14,7 @@ public class PlayerInput : MonoBehaviour {
     public float move { get; private set; } // 감지된 움직임 입력값
     public float rotate { get; private set; } // 감지된 회전 입력값
     public bool fire { get; private set; } // 감지된 발사 입력값
+    public bool fireDown { get; private set; }
     public bool reload { get; private set; } // 감지된 재장전 입력값
 
     // 매프레임 사용자 입력을 감지
@@ -32,6 +33,7 @@ public class PlayerInput : MonoBehaviour {
             rotate = 0;
             fire = false;
             reload = false;
+            fireDown = false;
 
             //초기화 이후 함수 종료
             return;
@@ -42,6 +44,8 @@ public class PlayerInput : MonoBehaviour {
         rotate = Input.GetAxis(rotateAxisName);
 
         fire = Input.GetButton(fireButtonName);
+
+        fireDown = Input.GetMouseButtonDown(0);
 
         //재장전을 연속으로 눌러 사용하지 않기 때문에
         //누른 순간 1회만 호출되도록 한다.
