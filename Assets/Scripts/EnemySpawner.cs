@@ -10,8 +10,8 @@ public class EnemySpawner : MonoBehaviour {
     public float damageMax = 40f; // 최대 공격력
     public float damageMin = 20f; // 최소 공격력
 
-    public float healthMax = 200f; // 최대 체력
-    public float healthMin = 100f; // 최소 체력
+    public float healthMax = 1400f; // 최대 체력
+    public float healthMin = 600f; // 최소 체력
 
     public float speedMax = 3f; // 최대 속도
     public float speedMin = 1f; // 최소 속도

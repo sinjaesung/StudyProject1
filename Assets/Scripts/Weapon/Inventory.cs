@@ -15,19 +15,24 @@ public class Inventory : MonoBehaviour
     public bool isWeapon3Active = false;//gun상속
 
     public GameObject Weapon4;//스노우완드
-    public bool isWeapon4Active = false;//gun상속
+    public bool isWeapon4Active = false;//wand
+
+    public GameObject Weapon5;//파이어스워드
+    public bool isWeapon5Active = false;//wand
 
     [Header("Weapons to Use")]
     public GameObject BaseGun;//기본 권총
     public GameObject ShotGun;//샷건 무기2
     public GameObject Bazooka;//바주카 무기3
     public GameObject SnowWand;//스노우 완드
+    public GameObject FireSword;//파이어 스워드
 
     [Header("Scripts")]
     public PlayerShooter playershooterScript;//기본무기
     public PlayerShooter2 playershooter2Script;//샷건무기2
     public PlayerShooter3 playershooter3Script;//바주카무기3
     public WandShooter1 wandshooter1Script;//스노우완드
+    public WandShooter2 wandshooter2Script;//파이어스워드
 
     private void Update()
     {
@@ -43,6 +48,7 @@ public class Inventory : MonoBehaviour
                 isWeapon2Active = false;
                 isWeapon3Active = false;
                 isWeapon4Active = false;
+                isWeapon5Active = false;
                 isRifleActive();
             }else if (Input.GetKeyDown("2"))
             {
@@ -50,6 +56,7 @@ public class Inventory : MonoBehaviour
                 isWeapon2Active = true;
                 isWeapon3Active = false;
                 isWeapon4Active = false;
+                isWeapon5Active = false;
                 isRifleActive();
             }else if (Input.GetKeyDown("3"))
             {
@@ -57,6 +64,7 @@ public class Inventory : MonoBehaviour
                 isWeapon2Active = false;
                 isWeapon3Active = true;
                 isWeapon4Active = false;
+                isWeapon5Active = false;
                 isRifleActive();
             }
             else if (Input.GetKeyDown("4"))
@@ -65,6 +73,16 @@ public class Inventory : MonoBehaviour
                 isWeapon2Active = false;
                 isWeapon3Active = false;
                 isWeapon4Active = true;
+                isWeapon5Active = false;
+                isRifleActive();
+            }
+            else if (Input.GetKeyDown("5"))
+            {
+                isWeapon1Active = false;
+                isWeapon2Active = false;
+                isWeapon3Active = false;
+                isWeapon4Active = false;
+                isWeapon5Active = true;
                 isRifleActive();
             }
             else
@@ -82,11 +100,13 @@ public class Inventory : MonoBehaviour
             ShotGun.SetActive(false);
             Bazooka.SetActive(false);
             SnowWand.SetActive(false);
+            FireSword.SetActive(false);
 
             playershooterScript.enabled = true;
             playershooter2Script.enabled = false;
             playershooter3Script.enabled = false;
             wandshooter1Script.enabled = false;
+            wandshooter2Script.enabled = false;
         }
         else if(isWeapon2Active == true)
         {
@@ -94,11 +114,13 @@ public class Inventory : MonoBehaviour
             ShotGun.SetActive(true);
             Bazooka.SetActive(false);
             SnowWand.SetActive(false);
+            FireSword.SetActive(false);
 
             playershooterScript.enabled = false;
             playershooter2Script.enabled = true;
             playershooter3Script.enabled = false;
             wandshooter1Script.enabled = false;
+            wandshooter2Script.enabled = false;
         }
         else if (isWeapon3Active == true)
         {
@@ -106,11 +128,13 @@ public class Inventory : MonoBehaviour
             ShotGun.SetActive(false);
             Bazooka.SetActive(true);
             SnowWand.SetActive(false);
+            FireSword.SetActive(false);
 
             playershooterScript.enabled = false;
             playershooter2Script.enabled = false;
             playershooter3Script.enabled = true;
             wandshooter1Script.enabled = false;
+            wandshooter2Script.enabled = false;
         }
         else if (isWeapon4Active == true)
         {
@@ -118,11 +142,27 @@ public class Inventory : MonoBehaviour
             ShotGun.SetActive(false);
             Bazooka.SetActive(false);
             SnowWand.SetActive(true);
+            FireSword.SetActive(false);
 
             playershooterScript.enabled = false;
             playershooter2Script.enabled = false;
             playershooter3Script.enabled = false;
             wandshooter1Script.enabled = true;
+            wandshooter2Script.enabled = false;
+        }
+        else if (isWeapon5Active == true)
+        {
+            BaseGun.SetActive(false);
+            ShotGun.SetActive(false);
+            Bazooka.SetActive(false);
+            SnowWand.SetActive(false);
+            FireSword.SetActive(true);
+
+            playershooterScript.enabled = false;
+            playershooter2Script.enabled = false;
+            playershooter3Script.enabled = false;
+            wandshooter1Script.enabled = false;
+            wandshooter2Script.enabled = true;
         }
     }
 }

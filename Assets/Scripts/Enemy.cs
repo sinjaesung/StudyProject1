@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI; // AI, 내비게이션 시스템 관련 코드를 가져오기
 
@@ -21,17 +22,22 @@ public class Enemy : LivingEntity {
     public float timeBetAttack = 0.5f; // 공격 간격
     private float lastAttackTime; // 마지막 공격 시점
 
+    public Color OriginalColor;
     EnemySpawner enemyspawner;
     // 추적할 대상이 존재하는지 알려주는 프로퍼티
+
+    public bool IsPaused = false;//얼려졌을때 또는 스턴기
+    public List<string> StateList = new List<string>();
+
     private bool hasTarget
     {
         get
         {
             // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
-            if (targetEntity != null && !targetEntity.dead)
+            if (targetEntity != null && !targetEntity.dead && !IsPaused)
             {
                 return true;
-            }
+            }//일시정지된 경우에도 움직임을 멈추기위해(Run->Idle)
 
             // 그렇지 않다면 false
             return false;
@@ -46,7 +52,26 @@ public class Enemy : LivingEntity {
         enemyAudioPlayer = GetComponent<AudioSource>();
 
         enemyRenderer = GetComponentInChildren<Renderer>();
+
+        StartCoroutine(UpdateStateCoroutine());
     }
+
+    private void Start()
+    {
+        //플레이어를 따라다니는 네비게이션 기능 시작.
+        StartCoroutine(UpdatePath());
+    }
+    public void ReStartUpdatePathCoroutine()
+    {
+        StopCoroutine(UpdatePath());
+        StartCoroutine(UpdatePath());
+    }
+    private void OnDisable()
+    {
+        Debug.Log("Enemy오브젝트 제거시 모든 코루틴 종료");
+        StopAllCoroutines();
+    }
+
 
     // 적 AI의 초기 스펙을 결정하는 셋업 메서드
     public void Setup(float newHealth, float newDamage, float newSpeed, Color skinColor) {
@@ -55,26 +80,67 @@ public class Enemy : LivingEntity {
         damage = newDamage;
         pathFinder.speed = newSpeed;
         enemyRenderer.material.color = skinColor;
+        OriginalColor = skinColor;
         Debug.Log("Enemy Setup>>" + skinColor);
     }
 
-    private void Start() {
-        //플레이어를 따라다니는 네비게이션 기능 시작.
-        StartCoroutine(UpdatePath());
+
+    //상태관련
+    public void AddStateList(string item)
+    {
+        StateList.Add(item);
     }
+    public void PrintStateList()
+    {
+        for (int e = 0; e < StateList.Count; e++)
+        {
+            Debug.Log(e + "| PrintStateList>>" + StateList[e]);
+        }
+    }
+    public void DeleteStateListItem(string item)
+    {
+        for(int n=0; n<StateList.Count; n++)
+        {
+            Debug.Log("Enemy타깃 "+ n + $"| {StateList[n]}");
+        }
+        Debug.Log("Enemy타깃 오브젝트 Freeze속성 있는거 모두 제거!"+transform.name);
+        StateList.RemoveAll(e => e == "Freeze");
+    }
+
+    private IEnumerator UpdateStateCoroutine()
+    {
+        while (true)
+        {
+            if (StateList.Contains("Freeze"))
+            {
+                Debug.Log("해당 오브젝트에서 얼려진 상태가 발견된경우, 색상컬러 파랗게하는거랑,움직임 멈추게끔");
+                enemyRenderer.material.color = Color.blue;
+            }
+            else
+            {
+                Debug.Log("해당 오브젝트에서 얼려진 상태가 해제");
+                enemyRenderer.material.color = OriginalColor;
+            }
+
+            yield return null;
+        }
+    }
+
 
     private void Update() {
         //에너미가 움직이는 조건 정의
         //Target이 있을 때만 움직인다.
         //=> hasTarget(프로퍼티) 값에 따라 애니메이션 재생
         enemyAnimator.SetBool("HasTarget", hasTarget);
+
+        PrintStateList();
     }
 
     // 주기적으로 추적할 대상의 위치를 찾아 경로를 갱신
     private IEnumerator UpdatePath() {
         //실시간으로 좀비가 가야 할 경로를 탐색. (=> 플레이어를 향해)
         //게임이 끝날 때까지 반복. 
-        while(dead == false)
+        while(dead == false && IsPaused==false)
         {
             if (hasTarget)
             {
@@ -106,6 +172,8 @@ public class Enemy : LivingEntity {
             }
             yield return new WaitForSeconds(0.25f);
         }
+        Debug.Log("Enemy UpdatePath코루틴 종료 빠져나옴 코루틴");
+        StopCoroutine(UpdatePath());
         //대상이 있을 때, 해당 대상이 있는 방향으로 경로를 갱신
         //대상이 없을 때, 새로운 대상을 추적.
     }

@@ -5,6 +5,15 @@ using UnityEngine;
 public class ExplosionDamage : MonoBehaviour
 {
     [SerializeField] float damage;
+    [SerializeField] float DestroyTime;
+
+    [SerializeField] private float StartTIme;
+    [SerializeField] public bool isUpdateDeleted = false;
+    private void Awake()
+    {
+        StartTIme = Time.time;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         IDamageable target = other.GetComponent<IDamageable>();
@@ -22,6 +31,18 @@ public class ExplosionDamage : MonoBehaviour
             //맞은 지점: 총알이 다은 지점
             //맞은 회전값: 부딪힌 장소의 회전값 - hit.normal
             target.OnDamage(damage);
+        }
+    }
+
+    private void Update()
+    {
+        if (isUpdateDeleted)
+        {
+            if (Time.time - StartTIme >= DestroyTime)
+            {
+                Debug.Log("오브젝트 생성된지 n초이상 지난 경우라면 삭제처리");
+                Destroy(gameObject);
+            }
         }
     }
 }

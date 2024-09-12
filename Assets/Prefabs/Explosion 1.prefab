@@ -5022,6 +5022,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 240
+  DestroyTime: 0
+  StartTIme: 8
 --- !u!1 &8708698991942613163
 GameObject:
   m_ObjectHideFlags: 0

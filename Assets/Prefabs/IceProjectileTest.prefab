@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 279759008574270430}
   - component: {fileID: 8366392566454606348}
   - component: {fileID: 4803475835488094786}
+  - component: {fileID: 1047869334380294486}
   m_Layer: 0
   m_Name: IceProjectileTest
   m_TagString: Untagged
@@ -103,5 +104,19 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.6
+  m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1047869334380294486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3989064383770717770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6ac5f7c3c02364bad460254e797738, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleInstance: {fileID: 3741047309661337480, guid: 975c72977a0c0c047a013c7cb26025d7,
+    type: 3}

@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1335f80b57e1564281355161c54162b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  startingHealth: 300
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 512
@@ -315,6 +315,9 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: c3d8accfc053f004ca665a1c8c4a6919, type: 3}
   damage: 20
   timeBetAttack: 0.5
+  OriginalColor: {r: 0, g: 0, b: 0, a: 0}
+  IsPaused: 0
+  StateList: []
 --- !u!1001 &7763340372912986096
 PrefabInstance:
   m_ObjectHideFlags: 0
