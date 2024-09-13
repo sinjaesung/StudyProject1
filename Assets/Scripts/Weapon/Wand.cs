@@ -144,6 +144,7 @@ public class Wand : MonoBehaviour
         while (projectile != null)
         {
             // Move the projectile towards the target position
+            projectile.transform.LookAt(target);
             projectile.transform.position = Vector3.MoveTowards(projectile.transform.position, target, projectileSpeed * Time.deltaTime);
 
             // If the projectile reaches the target, destroy it

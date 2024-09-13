@@ -956,6 +956,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e090a9750849f49c282494b652e54999, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSceneName: Main2
+  isMoveExecuted: 0
+  EnemiesCnt: 0
+  isGameStartSceneAnimflag: 0
+  isGameEndSceneAnimflag: 0
+  PlayerAnimator: {fileID: 0}
 --- !u!4 &297150661
 Transform:
   m_ObjectHideFlags: 0
@@ -1253,7 +1259,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &357502767
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1359,7 +1365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &404798476
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2923,7 +2929,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 3471071e07e6c4d41b1d47f005452a1b, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -4268,7 +4274,7 @@ MonoBehaviour:
   fireTransform: {fileID: 831432020}
   muzzleFlashEffect: {fileID: 975994832}
   shellEjectEffect: {fileID: 86117839}
-  shotClip: {fileID: 8300000, guid: b82a66dab749415458d1f6600c997095, type: 3}
+  shotClip: {fileID: 8300000, guid: 29acdfa4d35c3c24d817ebb91aedf8b6, type: 3}
   reloadClip: {fileID: 8300000, guid: 9eca29ee7f8209e419470fcd586aec21, type: 3}
   damage: 240
   fireDistance: 80
@@ -4280,7 +4286,7 @@ MonoBehaviour:
   lastFireTime: 0
   HitPos: {x: 0, y: 0, z: 0}
   PlayerAnimator: {fileID: 0}
-  explodePrefab: {fileID: 3741047309661337480, guid: 3c22bdd3fdc73f045926e53134bd7dc4,
+  explodePrefab: {fileID: 3741047309661337480, guid: 567770fcb94af4442b02a5800c7c5c94,
     type: 3}
 --- !u!120 &965255607
 LineRenderer:
@@ -4905,7 +4911,7 @@ MonoBehaviour:
   fireTransform: {fileID: 831432020}
   muzzleFlashEffect: {fileID: 473892464}
   shellEjectEffect: {fileID: 157695724}
-  shotClip: {fileID: 8300000, guid: b82a66dab749415458d1f6600c997095, type: 3}
+  shotClip: {fileID: 8300000, guid: 29acdfa4d35c3c24d817ebb91aedf8b6, type: 3}
   reloadClip: {fileID: 8300000, guid: 9eca29ee7f8209e419470fcd586aec21, type: 3}
   damage: 60
   fireDistance: 66
@@ -6081,7 +6087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d59ae54f97f62d844aebf692b4294dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 80000
+  startingHealth: 50000
   healthSlider: {fileID: 2109478013}
   deathClip: {fileID: 8300000, guid: 4265c953ea2b74edabac0c972182dcba, type: 3}
   hitClip: {fileID: 8300000, guid: cbfb3a79860ac42c89b09fc131ef4b61, type: 3}
@@ -7567,7 +7573,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1494936779
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7607,7 +7613,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d4fb9f1a62c8322448ee0c17257dae25, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 60b64679eb3f4b749a1edb5e7f272b67, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9228,7 +9234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1894100595
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9268,7 +9274,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea0b0f13af9abd34f9cd617223e37a92, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7bef68edfd323e8439b26bc3144597d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -9303,7 +9309,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1913083310
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9343,7 +9349,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d4fb9f1a62c8322448ee0c17257dae25, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 52650bede88599b4da032f09f7df853a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -10188,7 +10194,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2126034513
 RectTransform:
   m_ObjectHideFlags: 0

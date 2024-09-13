@@ -35,17 +35,28 @@ public class EnemySpawner : MonoBehaviour {
         //많은 좀비가 생성된다. 웨이브 정보는 UI로도 표시한다.
         if(enemies.Count <= 0)
         {
-            SpawnWave();
+            if (wave < 10)
+            {
+                SpawnWave();
+            }
         }
-
-       // UpdateUI();
     }
 
     // 웨이브 정보를 UI로 표시
     public void UpdateUI() {
         UIManager.instance.UpdateWaveText(wave, enemies.Count);
     }
-
+    public bool isEnemyClear()
+    {
+        if (enemies.Count == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     // 현재 웨이브에 맞춰 적을 생성
     private void SpawnWave() {
         //좀비 생성 시마다 웨이브 레벨을 1씩 증가시킨다.

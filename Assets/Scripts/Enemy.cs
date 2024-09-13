@@ -133,7 +133,7 @@ public class Enemy : LivingEntity {
         //=> hasTarget(프로퍼티) 값에 따라 애니메이션 재생
         enemyAnimator.SetBool("HasTarget", hasTarget);
 
-        PrintStateList();
+        //PrintStateList();
     }
 
     // 주기적으로 추적할 대상의 위치를 찾아 경로를 갱신
